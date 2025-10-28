@@ -5,8 +5,20 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+// Load keystore properties from key.properties file
+val keystoreProperties = HashMap<String, String>()
+val keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.forEachLine { line ->
+        val parts = line.split("=")
+        if (parts.size == 2) {
+            keystoreProperties[parts[0].trim()] = parts[1].trim()
+        }
+    }
+}
+
 android {
-    namespace = "com.example.brother_tazi_rider"
+    namespace = "com.brother.taxi.riders"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -30,11 +42,22 @@ android {
         versionName = flutter.versionName
     }
 
+    // Signing configurations
+    signingConfigs {
+        if (keystoreProperties.containsKey("keyAlias")) {
+            create("release") {
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 }

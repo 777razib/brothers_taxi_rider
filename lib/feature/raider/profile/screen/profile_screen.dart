@@ -6,6 +6,7 @@ import '../../../auth/login/view/login_view.dart';
 import '../../my_rides/screen/my_rides.dart';
 import '../../privacy_policy/screen/privacy_policy.dart';
 import '../../ride_complete.dart/screen/ride_complete.dart';
+import '../controller/delete_api_controller.dart';
 import '../controller/profile_edit_controller.dart';
 import '../widget/notification_widget.dart';
 import '../widget/profile_action_widgets.dart';
@@ -19,7 +20,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 final UpdateProfileController updateProfileController = Get.put(UpdateProfileController());
-
+final DeleteApiController deleteApiController=Get.put(DeleteApiController());
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
@@ -41,11 +42,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: ()async{
+          onRefresh: () async {
             updateProfileController.fetchMyProfile();
           },
           child: SingleChildScrollView(
@@ -87,9 +87,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Obx(() {
-                              final user = updateProfileController.userData.value;
+                              final user = updateProfileController.userData
+                                  .value;
                               final profileImage = user?.profileImage ?? '';
-                              final selectedImage = updateProfileController.selectedImage.value;
+                              final selectedImage = updateProfileController
+                                  .selectedImage.value;
 
                               return Center(
                                 child: GestureDetector(
@@ -100,7 +102,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ? FileImage(selectedImage)
                                         : (profileImage.isNotEmpty
                                         ? NetworkImage(profileImage)
-                                        : const AssetImage('assets/images/default_avatar.png') as ImageProvider),
+                                        : const AssetImage(
+                                        'assets/images/default_avatar.png') as ImageProvider),
                                   ),
                                 ),
                               );
@@ -109,12 +112,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             const SizedBox(height: 12),
                             Text(
                               updateProfileController.fullNameController.text,
-                              style: const TextStyle(fontSize: 16, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.black),
                             ),
                             const SizedBox(height: 12),
                             Text(
                               updateProfileController.emailController.text,
-                              style: const TextStyle(fontSize: 16, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.black),
                             ),
 
 
@@ -271,6 +276,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     iconData: (Icons.arrow_forward_ios),
                     size: 18,
                   ),
+                  const SizedBox(height: 21),
+                  /*ProfileActionWidgets(
+                    image: "assets/icons/delete-02.png",
+                    actionName: "Account Delete",
+                    style: globalTextStyle(),
+                    voidCallback: () async {
+                      final id = await AuthController.getUserId(); // ✅ FIXED
+
+                      bool isSuccess = await deleteApiController.deleteApiMethod("$id");
+                      if (isSuccess) {
+                        await AuthController.dataClear();
+                        Get.to(() => LoginView());
+                      } else {
+                        Get.snackbar("Error", "Something went wrong");
+                      }
+                    },
+                    iconData: Icons.arrow_forward_ios,
+                    size: 18,
+                  ),*/
+                  ProfileActionWidgets(
+                    image: "assets/icons/delete-02.png",
+                    actionName: "Account Delete",
+                    style: globalTextStyle(),
+                    voidCallback: () async {
+                      Get.defaultDialog(
+                        title: "Confirm Delete",
+                        middleText: "Are you sure you want to delete your account?",
+                        textCancel: "No",
+                        textConfirm: "Yes",
+                        confirmTextColor: Colors.white,
+                        buttonColor: Colors.red,
+                        cancelTextColor: Colors.black,
+                        barrierDismissible: false,
+                        onConfirm: () async {
+                          Get.back(); // Close dialog first
+                          final id = await AuthController.getUserId();
+                          if (id == null) {
+                            Get.snackbar("Error", "User ID not found");
+                            return;
+                          }
+
+                          bool isSuccess = await deleteApiController.deleteApiMethod(id);
+                          if (isSuccess) {
+                            await AuthController.dataClear();
+                            Get.offAll(() => LoginView());
+                            Get.snackbar("Success", "Your account has been deleted");
+                          } else {
+                            Get.snackbar("Error", "Something went wrong");
+                          }
+                        },
+                        onCancel: () {
+                          Get.back(); // Close dialog when user presses "No"
+                        },
+                      );
+                    },
+                    iconData: Icons.arrow_forward_ios,
+                    size: 18,
+                  ),
+
                   const SizedBox(height: 40),
                 ],
               ),

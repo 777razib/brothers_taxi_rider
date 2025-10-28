@@ -17,6 +17,7 @@ class Urls {
   static const String paymentsCardPayment = '$_baseUrl/payments/card-payment';
   static const String reviewsCreate = '$_baseUrl/reviews/create';
   static  String carTransportsSingle(String id) => '$_baseUrl/carTransports/single/$id';
+  static  String usersDeleteAccount(String id) => '$_baseUrl/users/delete-account/$id';
   static  String riderRideCancel(String id) => '$_baseUrl/carTransports/$id/cancel';
   static  String carTransportsCompleted(String id) => '$_baseUrl/carTransports/$id/completed';
 
