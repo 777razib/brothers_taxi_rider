@@ -8,7 +8,7 @@ import 'feature/raider/chat/service/chat_service.dart';
 import 'feature/splash_screen/screen/splash_screen.dart';
 import 'feature/web socket/map_web_socket.dart' as raiderWebSocket;
 import 'feature/friends/service/chat_service.dart'; // WebSocketService
-
+//Apple has all permissions
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

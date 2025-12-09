@@ -20,6 +20,38 @@
     <key>NSMicrophoneUsageDescription</key>
     <string>We need access to your microphone to record audio with videos.</string>
 
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app requires your location to show nearby drivers and rides.</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>This app needs access to your location even when the app is running in the background.</string>
+
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app uses your location for ride tracking.</string>
+
+
+    <key>NSCameraUsageDescription</key>
+    <string>This app needs to access the camera to upload your profile and documents.</string>
+
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app needs access to your photo library to pick images.</string>
+
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>This app needs permission to save images to your gallery.</string>
+
+
+    <key>FirebaseMessagingAutoInitEnabled</key>
+    <true/>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>This identifier will be used to deliver personalized notifications.</string>
+
+
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+         <string>tel</string>
+    </array>
+
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
