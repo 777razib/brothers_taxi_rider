@@ -1,7 +1,7 @@
 class Urls {
-  static const String _baseUrl = 'http://195.200.15.155:5006/api/v1';
-  static const String baseUrl = 'http://195.200.15.155:5006/api/v1';
-  static const String socketUrl = 'ws://195.200.15.155:5006';
+  static const String _baseUrl = 'http://72.61.163.212:5006/api/v1';
+  static const String baseUrl = 'http://72.61.163.212:5006/api/v1';
+  static const String socketUrl = 'ws://72.61.163.212:5006';
   static const String login = '$_baseUrl/auth/login';
   static const String resetPassword = '$_baseUrl/auth/reset-password';
   static const String authentication = '$_baseUrl/auth/verify-auth';
