@@ -8,7 +8,7 @@
 
 
     <application
-        android:label="Brother Taxi Rider"
+        android:label="Brother Taxi"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
