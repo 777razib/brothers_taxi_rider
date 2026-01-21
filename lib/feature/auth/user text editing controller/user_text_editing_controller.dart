@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class UserTextEditingController extends GetxController {
   TextEditingController phone = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController countryCode = TextEditingController(text: '+1');
   TextEditingController otp = TextEditingController();
 

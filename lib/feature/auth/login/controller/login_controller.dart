@@ -20,6 +20,7 @@ class LoginApiRiderController extends GetxController {
     try {
       Map<String, dynamic> mapBody = {
         "phoneNumber": userTextEditingController.countryCodeAndPhone.trim(),
+        "email": userTextEditingController.email.text.trim(),
         "role": "RIDER",
       };
 

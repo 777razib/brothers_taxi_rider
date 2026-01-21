@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../controller/splash_screen_controller.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -10,9 +9,13 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
-    return Stack(
-      children: [Image.asset("assets/images/splash.png", fit: BoxFit.cover)],
+    return Scaffold(
+      body: SizedBox.expand(
+        child: Image.asset(
+          "assets/images/splash.png",
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }
