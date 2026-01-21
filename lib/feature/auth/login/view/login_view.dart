@@ -13,7 +13,7 @@ class LoginView extends StatelessWidget {
   LoginView({super.key});
 
   final UserTextEditingController adminTextEditingController = Get.put(UserTextEditingController());
- final GlobalKey<FormState> _globalKey=GlobalKey<FormState>();
+  final GlobalKey<FormState> _globalKey=GlobalKey<FormState>();
   final LoginApiRiderController loginApiRiderController = Get.put(LoginApiRiderController());
 
   @override
@@ -143,7 +143,31 @@ class LoginView extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 20),
-
+                SizedBox(
+                  height: 88,
+                  width: 277,
+                  child: Text(
+                    "Enter your email \naddress",
+                    style: globalTextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                      lineHeight: 1.5,
+                      color: const Color(0xFF041020),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: adminTextEditingController.email,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: "Enter you Eamil",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16)
+                    )
+                  ),
+                ),
+                const SizedBox(height: 20),
                 /// Continue button
                 CustomButton(
                   title: "Continue",
@@ -190,7 +214,7 @@ class LoginView extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 /// Google button
-                GestureDetector(
+              /*  GestureDetector(
                   onTap: () {},
                   child: Container(
                     height: 56,
@@ -225,7 +249,7 @@ class LoginView extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

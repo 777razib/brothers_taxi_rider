@@ -99,7 +99,7 @@ class OtpScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          "${adminTextEditingController.countryCodeAndPhone}",
+                          "${adminTextEditingController.email}",
                           style: globalTextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,

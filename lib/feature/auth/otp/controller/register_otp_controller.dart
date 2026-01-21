@@ -27,7 +27,7 @@ class RegisterOtpControllers extends GetxController {
 
     try {
       Map<String, dynamic> mapBody = {
-        "phoneNumber": userTextEditingController.countryCodeAndPhone.trim(),
+        "email": userTextEditingController.email.text.trim(),
         "otp": int.parse(userTextEditingController.otp.text.trim()),
         "role": "RIDER",
       };

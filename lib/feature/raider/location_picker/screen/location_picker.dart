@@ -60,7 +60,7 @@ class LocationPicker extends StatelessWidget {
                     onChanged: (value) => controller.searchPickPlaces(value),
                   ),
                   // --- Use Current Location Button ---
-                  const SizedBox(height: 16),
+                 /* const SizedBox(height: 16),
                   controller.isPickLoading.value
                       ? const Center(child: CircularProgressIndicator(color: Colors.amber, strokeWidth: 2))
                       : ElevatedButton.icon(
@@ -75,7 +75,7 @@ class LocationPicker extends StatelessWidget {
                       elevation: 0,
                       side: const BorderSide(color: Colors.black12, width: 1),
                     ),
-                  ),
+                  ),*/
                 ],
               )
               // --- Selected Pick Address Display/Clear ---

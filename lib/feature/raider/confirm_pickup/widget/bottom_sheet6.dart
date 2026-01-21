@@ -307,23 +307,30 @@ class ExpandedBottomSheet6 extends StatelessWidget {
                       ),
                       const SizedBox(width: 15),
                       GestureDetector(
-                        onTap: () async {
-                          final phone = rideData?.vehicle?.driver?.phoneNumber ?? '';
-                          debugPrint("📞 Attempting to call: $phone");
-                          if (phone.isEmpty) {
-                            debugPrint("❌ Call failed: Driver's phone number not available.");
-                            Get.snackbar("Error", "Driver's phone number is not available.");
-                            return;
-                          }
-                          final uri = Uri.parse("tel:$phone");
-                          if (await canLaunchUrl(uri)) {
-                            debugPrint("✅ Launching phone dialer: $phone");
-                            await launchUrl(uri);
-                          } else {
-                            debugPrint("❌ Could not open dialer for: $phone");
-                            Get.snackbar("Error", "Could not open the phone dialer.");
-                          }
-                        },
+                      onTap: () async {
+            final phone = rideData?.vehicle?.driver?.phoneNumber ?? '';
+            debugPrint("Attempting to call: $phone");
+
+            if (phone.isEmpty) {
+            Get.snackbar("Error", "Driver's phone number is not available.");
+            return;
+            }
+
+            final uri = Uri.parse("tel:$phone");
+
+            try {
+            bool launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
+            if (launched) {
+            debugPrint("✅ Dialer opened successfully");
+            } else {
+            debugPrint("❌ Failed to open dialer");
+            Get.snackbar("Error", "Could not open the phone dialer.");
+            }
+            } catch (e) {
+            debugPrint("❌ Exception: $e");
+            Get.snackbar("Error", "Could not open the phone dialer.");
+            }
+            },
                         child: Image.asset(
                           "assets/images/call.png",
                           height: 60,

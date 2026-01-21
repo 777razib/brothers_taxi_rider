@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Brother Taxi</string>
+	<string>Brothers Taxi</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>We need your location to show your position on the map.</string>
 
@@ -59,7 +59,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Brother Taxi</string>
+	<string>Brothers Taxi</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
