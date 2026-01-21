@@ -5,12 +5,12 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// Load keystore properties from key.properties file
+// Load keystore properties safely
 val keystoreProperties = HashMap<String, String>()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
     keystorePropertiesFile.forEachLine { line ->
-        val parts = line.split("=")
+        val parts = line.split("=", limit = 2)
         if (parts.size == 2) {
             keystoreProperties[parts[0].trim()] = parts[1].trim()
         }
@@ -32,31 +32,40 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.brother.taxi"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = 8
         versionName = "1.8"
     }
 
-    // Signing configurations
     signingConfigs {
-        if (keystoreProperties.containsKey("keyAlias")) {
+        // Only create release config if all required properties exist
+        val hasAllKeys = keystoreProperties.containsKey("storeFile") &&
+                keystoreProperties.containsKey("storePassword") &&
+                keystoreProperties.containsKey("keyAlias") &&
+                keystoreProperties.containsKey("keyPassword")
+
+        if (hasAllKeys) {
             create("release") {
-                keyAlias = keystoreProperties["keyAlias"] as String
-                keyPassword = keystoreProperties["keyPassword"] as String
-                storeFile = file(keystoreProperties["storeFile"] as String)
-                storePassword = keystoreProperties["storePassword"] as String
+                // Safe access – .get() returns String?, we check existence above
+                keyAlias = keystoreProperties["keyAlias"]
+                keyPassword = keystoreProperties["keyPassword"]
+                storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+                storePassword = keystoreProperties["storePassword"]
             }
         }
     }
 
     buildTypes {
-        release {
-            signingConfig = signingConfigs.getByName("release")
+        getByName("release") {
+            // Use release signing only if it was created, otherwise fallback to debug
+            signingConfig = if (signingConfigs.findByName("release") != null) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
