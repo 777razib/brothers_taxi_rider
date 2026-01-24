@@ -12,8 +12,9 @@ class RegisterOtpControllers extends GetxController {
   var otpError = false.obs;
   var otpErrorText = "".obs;
 
-  final UserTextEditingController userTextEditingController =
-  Get.put(UserTextEditingController());
+  final UserTextEditingController userTextEditingController = Get.put(
+    UserTextEditingController(),
+  );
 
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
@@ -27,7 +28,7 @@ class RegisterOtpControllers extends GetxController {
 
     try {
       Map<String, dynamic> mapBody = {
-        "email": userTextEditingController.email.text.trim(),
+        "phoneNumber": userTextEditingController.countryCodeAndPhone.trim(),
         "otp": int.parse(userTextEditingController.otp.text.trim()),
         "role": "RIDER",
       };
@@ -43,20 +44,21 @@ class RegisterOtpControllers extends GetxController {
       debugPrint("📥 API Response Data: ${response.responseData}");
 
       if (response.isSuccess) {
-
-        String token=response.responseData!['data']["token"];
-        RiderModel riderModel=RiderModel.fromJson(response.responseData!["data"]);
-        await AuthController.setUserData(token,riderModel);
+        String token = response.responseData!['data']["token"];
+        RiderModel riderModel = RiderModel.fromJson(
+          response.responseData!["data"],
+        );
+        await AuthController.setUserData(token, riderModel);
         await AuthController.saveUserId(riderModel.id.toString());
 
-        isSuccess=true;
-        _errorMessage=null;
+        isSuccess = true;
+        _errorMessage = null;
         update();
       }
     } catch (e) {
       _errorMessage = "Exception: $e";
       debugPrint("❌ OTP Verify Exception: $e");
-      isSuccess =false;
+      isSuccess = false;
       update;
     }
 

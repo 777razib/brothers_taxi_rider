@@ -11,16 +11,15 @@ class LoginApiRiderController extends GetxController {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  UserTextEditingController userTextEditingController =
-  Get.put(UserTextEditingController());
-
+  UserTextEditingController userTextEditingController = Get.put(
+    UserTextEditingController(),
+  );
 
   Future<bool> loginApiRiderMethod() async {
     bool isSuccess = false;
     try {
       Map<String, dynamic> mapBody = {
         "phoneNumber": userTextEditingController.countryCodeAndPhone.trim(),
-        "email": userTextEditingController.email.text.trim(),
         "role": "RIDER",
       };
 

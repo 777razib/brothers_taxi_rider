@@ -12,9 +12,13 @@ import '../widget/backgroundimage.dart';
 class LoginView extends StatelessWidget {
   LoginView({super.key});
 
-  final UserTextEditingController adminTextEditingController = Get.put(UserTextEditingController());
-  final GlobalKey<FormState> _globalKey=GlobalKey<FormState>();
-  final LoginApiRiderController loginApiRiderController = Get.put(LoginApiRiderController());
+  final UserTextEditingController adminTextEditingController = Get.put(
+    UserTextEditingController(),
+  );
+  final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+  final LoginApiRiderController loginApiRiderController = Get.put(
+    LoginApiRiderController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +66,7 @@ class LoginView extends StatelessWidget {
                             onChanged: (code) {
                               if (code.dialCode != null) {
                                 adminTextEditingController.countryCode.text =
-                                code.dialCode!;
+                                    code.dialCode!;
                                 adminTextEditingController.selectedCountryCode =
                                     code;
                               }
@@ -143,31 +147,7 @@ class LoginView extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 20),
-                SizedBox(
-                  height: 88,
-                  width: 277,
-                  child: Text(
-                    "Enter your email \naddress",
-                    style: globalTextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w600,
-                      lineHeight: 1.5,
-                      color: const Color(0xFF041020),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: adminTextEditingController.email,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: "Enter you Eamil",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16)
-                    )
-                  ),
-                ),
-                const SizedBox(height: 20),
+
                 /// Continue button
                 CustomButton(
                   title: "Continue",
@@ -188,8 +168,9 @@ class LoginView extends StatelessWidget {
                         Container(
                           height: 1,
                           width: 144,
-                          decoration:
-                          const BoxDecoration(color: Color(0xFFEDEDF3)),
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFEDEDF3),
+                          ),
                         ),
                         const SizedBox(width: 5),
                         Text(
@@ -203,8 +184,9 @@ class LoginView extends StatelessWidget {
                         Container(
                           height: 1,
                           width: 144,
-                          decoration:
-                          const BoxDecoration(color: Color(0xFFEDEDF3)),
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFEDEDF3),
+                          ),
                         ),
                       ],
                     ),
@@ -214,7 +196,7 @@ class LoginView extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 /// Google button
-              /*  GestureDetector(
+                /*GestureDetector(
                   onTap: () {},
                   child: Container(
                     height: 56,
@@ -259,12 +241,11 @@ class LoginView extends StatelessWidget {
   }
 
   void _loginApiHitButton() async {
-    bool isSuccess=await loginApiRiderController.loginApiRiderMethod();
-    if(isSuccess){
-      Get.to(() =>  OtpScreen());
-    }
-    else{
-      Get.snackbar("Login", "Failed",colorText: Colors.red);
+    bool isSuccess = await loginApiRiderController.loginApiRiderMethod();
+    if (isSuccess) {
+      Get.to(() => OtpScreen());
+    } else {
+      Get.snackbar("Login", "Failed", colorText: Colors.red);
     }
   }
 }

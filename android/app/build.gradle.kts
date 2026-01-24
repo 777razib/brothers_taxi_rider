@@ -17,6 +17,25 @@ if (keystorePropertiesFile.exists()) {
     }
 }
 
+// Check if keystore file exists (handle both absolute and relative paths)
+val keystoreFileExists = if (keystoreProperties.containsKey("storeFile")) {
+    val storeFilePath = keystoreProperties["storeFile"] as String
+    val keystoreFile = if (storeFilePath.contains(":") || storeFilePath.startsWith("/")) {
+        // Absolute path (Windows drive letter or Unix absolute path)
+        file(storeFilePath)
+    } else {
+        // Relative path - resolve from android directory
+        rootProject.file(storeFilePath)
+    }
+    keystoreFile.exists()
+} else {
+    false
+}
+val hasValidKeystore = keystoreProperties.containsKey("keyAlias") && 
+    keystoreProperties.containsKey("keyPassword") && 
+    keystoreProperties.containsKey("storePassword") && 
+    keystoreFileExists
+
 android {
     namespace = "com.brother.taxi"
     compileSdk = flutter.compileSdkVersion
@@ -44,11 +63,18 @@ android {
 
     // Signing configurations
     signingConfigs {
-        if (keystoreProperties.containsKey("keyAlias")) {
+        if (hasValidKeystore) {
             create("release") {
                 keyAlias = keystoreProperties["keyAlias"] as String
                 keyPassword = keystoreProperties["keyPassword"] as String
-                storeFile = file(keystoreProperties["storeFile"] as String)
+                val storeFilePath = keystoreProperties["storeFile"] as String
+                storeFile = if (storeFilePath.contains(":") || storeFilePath.startsWith("/")) {
+                    // Absolute path
+                    file(storeFilePath)
+                } else {
+                    // Relative path
+                    rootProject.file(storeFilePath)
+                }
                 storePassword = keystoreProperties["storePassword"] as String
             }
         }
@@ -56,7 +82,9 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            if (hasValidKeystore) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }

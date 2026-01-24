@@ -12,11 +12,13 @@ import '../controller/register_otp_controller.dart';
 class OtpScreen extends StatelessWidget {
   OtpScreen({super.key});
 
-  final UserTextEditingController adminTextEditingController =
-  Get.put(UserTextEditingController());
+  final UserTextEditingController adminTextEditingController = Get.put(
+    UserTextEditingController(),
+  );
 
-  final RegisterOtpControllers registerOtpControllers =
-  Get.put(RegisterOtpControllers());
+  final RegisterOtpControllers registerOtpControllers = Get.put(
+    RegisterOtpControllers(),
+  );
 
   final formKey = GlobalKey<FormState>();
   final focusNode = FocusNode();
@@ -99,7 +101,7 @@ class OtpScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          "${adminTextEditingController.email}",
+                          "${adminTextEditingController.countryCodeAndPhone}",
                           style: globalTextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
@@ -119,8 +121,7 @@ class OtpScreen extends StatelessWidget {
                         focusNode: focusNode,
                         length: 4,
                         defaultPinTheme: defaultPinTheme,
-                        separatorBuilder: (index) =>
-                        const SizedBox(width: 8),
+                        separatorBuilder: (index) => const SizedBox(width: 8),
 
                         /// Validation: Empty -> Error
                         validator: (value) {
@@ -177,10 +178,7 @@ class OtpScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
 
-                    CustomButton(
-                      title: "Resend OTP",
-                      onPress: () {},
-                    ),
+                    CustomButton(title: "Resend OTP", onPress: () {}),
                     const SizedBox(height: 30),
 
                     CustomButton(
