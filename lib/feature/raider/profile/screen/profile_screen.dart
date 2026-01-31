@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/services_class/shared_preferences_data_helper.dart';
+import '../../../../core/services_class/shared_preferences_helper.dart';
 import '../../../../core/style/global_text_style.dart';
 import '../../../auth/login/view/login_view.dart';
 import '../../my_rides/screen/my_rides.dart';
@@ -270,6 +271,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     actionName: "Log out",
                     style: globalTextStyle(),
                     voidCallback: () {
+                      SharedPreferencesHelper.clearAccessToken();
+                      SharedPreferencesHelper.clearAllData();
                       AuthController.dataClear();
                       Get.to(() => LoginView());
                     },
